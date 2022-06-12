@@ -67,6 +67,7 @@ if gpioAvailable:
 
 #initialise pygame
 pygame.init()
+pygame.mouse.set_visible(False)
 
 #initialise required game classes
 scope=pyscope()
@@ -76,7 +77,7 @@ cg=CalibrationGraphics(scope, resources, ca)
 sg=StartupGraphics(scope, resources) #get the startup graphics instance
 tg=TrackerGraphics(scope, resources, ca) #get the tracker graphics instance
 ta=TrackerAudio(resources) #get the tracker audio instance
-pygame.mouse.set_visible(False) # Hide the mouse pointer
+# pygame.mouse.set_visible(False) # Hide the mouse pointer
 
 #initialise a clock instance so we can control the game loop
 my_clock=pygame.time.Clock()
@@ -156,6 +157,12 @@ try:
                 if event.key==K_UP:
                     print("Adding a contact...")
                     addContact = True
+                if event.key==K_r: # Reset graphics and show start screens again
+                    tg.reset()
+                    wave_size=0
+                    sg.draw()
+                if event.key==K_p:
+                    pygame.image.save(scope.screen, "screenshot.png")
             if event.type == pygame.KEYUP:
                 if event.key==K_q:
                     qPress=False

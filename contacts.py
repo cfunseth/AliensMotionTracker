@@ -40,6 +40,12 @@ class Contacts():
         if len(self.ContactArray)==0:
             self.ClosestScreenDist = 999
 
+    def reset(self):
+        for i in range(0,len(self.ContactArray),1):
+            # Force all of the contacts out of scope
+            self.ContactArray[i].outOfScope=True
+        self.moveContacts()
+
     #define a function to return the closest screen value converted into the tracker distance scale
     def getClosestContactDistance(self):
 

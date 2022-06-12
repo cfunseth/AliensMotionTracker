@@ -95,6 +95,9 @@ class TrackerGraphics:
 
         return self.contactsArray
 
+    def reset(self):
+        self.contactsArray.reset()
+
     #Define the image rotation function
     def rot_center(self, image, angle):
         orig_rect = image.get_rect()
