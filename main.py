@@ -61,7 +61,7 @@ def my_callback(channel):
     else:
         numberOfButtonPresses=numberOfButtonPresses+1
         buttonTimerStart=time.time()
-    
+
 if gpioAvailable:
     GPIO.add_event_detect(20, GPIO.BOTH, callback=my_callback, bouncetime=300)
 
@@ -103,7 +103,7 @@ try:
 
         endTime = time.time()
         elapsedTime = endTime - startTime
-        
+
         if ledState:
            if elapsedTime >= ledOnTime:
                #turn it off
@@ -118,7 +118,7 @@ try:
           if ledState:
             ledState = False
             if gpioAvailable:
-              GPIO.output(ledPin, ledState)    
+              GPIO.output(ledPin, ledState)
             #set the change state flag to false as we are awaiting the next state change
             changeLedState = False
             #initialise the clock instance to track led timings
@@ -126,7 +126,7 @@ try:
           else:
             ledState = True
             if gpioAvailable:
-              GPIO.output(ledPin, ledState)    
+              GPIO.output(ledPin, ledState)
             #set the change state flag to false as we are awaiting the next state change
             changeLedState = False
             #initialise the clock instance to track led timings
@@ -139,7 +139,7 @@ try:
             addContact = False
 
         #process pygame events
-        keys=pygame.key.get_pressed()        
+        keys=pygame.key.get_pressed()
         for event in pygame.event.get(): # User did something
             if event.type == pygame.QUIT: # If user clicked close
                 done=True # Flag that we are done so we exit this loop
@@ -151,8 +151,10 @@ try:
                     buttonTimerCurrent=time.time()
                     buttonHoldTime=0
                 if event.key==K_x:
+                    print("Quitting program...")
                     done=True
                 if event.key==K_UP:
+                    print("Adding a contact...")
                     addContact = True
             if event.type == pygame.KEYUP:
                 if event.key==K_q:
@@ -163,6 +165,7 @@ try:
 
         if buttonHoldTime>4:
             buttonHoldTime=0
+            print("Calibrating...")
             stateString="CALIBRATE"
             ca.initCalibration()
             calibrationStep = 0
@@ -178,9 +181,8 @@ try:
             else:
                 cg.update(xy, ca)
                 calibrationStep=calibrationStep+1
-            
-        else:
 
+        else:
             #process tracker graphics
             args = tg.update(wave_size, addContact, ca)
             if args!=999:
@@ -195,7 +197,7 @@ try:
 
         my_clock.tick(21)
 finally:
-    print "clean exit"
+    print("clean exit")
 
 scope.pySurface.fill((0,0,0))
 scope.screen.blit(scope.pySurface,(0,0))
